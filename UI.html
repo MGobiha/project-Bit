@@ -1,0 +1,100 @@
+<html>
+<header>
+<style>
+.main-body{
+	width:50%;
+	text-align:left;
+	background-color:#d6d3d3;
+	font-family:times new roman;
+	margin-left:25%;
+	margin-right:25%;
+	padding:5%;
+	font-size:18px;
+}
+.box-row{
+	margin-bottom:2%;
+}
+.box{
+	padding:1%;
+	background-color:white;
+	width:100%;
+	border:solid 1px gray;
+}
+.btn{
+	background-color:#009b4b;
+	color:white;
+	font-size:15px;
+	padding:2%;
+	border-radius:20px;
+	width:100px;
+	border:solid 1px gray;
+}
+</style>
+</header>
+<body>
+<?php
+include("DB_connection.php");
+if (isset($POST['submit'])){
+sql="insert into form_table(name,address,dob,mail)values('".mysqli_real_escape_string($connection,$_POST['name'])."','".mysqli_real_escape_string($connection,$_POST['address'])."','".mysqli_real_escape_string($connection,$_POST['dob'])."','".mysqli_real_escape_string($connection,$_POST['mail'])."')";
+$query=mysqli_query($connection,$sql);
+}
+?>
+
+	<div class="">
+		<div class="main-body">
+			<h3>Registertion form</h3>
+			<form action="" method="POST" enctype="multipart/form_data">
+				<div class="box-row">
+					<label>Name</label>
+					<input type="text" name="full-name" value="" id="full-name" class="box"/>
+				</div>
+				<div class="box-row">
+					<label>Address</label>
+					<input type="name" name="address" value="" id="address" class="box"/>
+				</div>				
+				<div class="box-row">
+					<label>DOB</label>
+					<input type="datetime" name="dob" value="" id="dob" class="box"/>
+				</div>
+				<div class="box-row">
+					<label>E-mail</label>
+					<input type="mail" palceholder="Eg:abcdef@gmail.com" name="mail" value="" id="mail" class="box"/>
+				</div>
+				<div class="box-row">
+					<button type="submit"  name="submit" value="" id="submit" class="btn">Submit</button>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+	<?php
+	$sql="select * from form_table";
+	$result=mysqli_query($connection,$sql);
+	
+	?>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Address</th>
+			<th>DOB</th>
+			<th>Edit</th>
+		</tr>
+		<?php
+		while($row=mysqli_fetch_assoc($result)){
+			
+		?>
+		<tr>
+			<td><?php echo $row['id']; ?></td>
+			<td><?php echo $row['name']; ?></td>
+			<td><?php echo $row['address']; ?></td>
+			<td><?php echo $row['dob']; ?></td>
+			<td><?php echo $row['mail']; ?></td>
+			<td><button style="">View</button><button style="">Edit</button></td>
+		</tr>
+		<?php
+			}
+		?>
+	</table>
+	
+</body>
+</html>
